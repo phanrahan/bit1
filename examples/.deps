@@ -1,0 +1,125 @@
+{
+    ".deps_version": 2,
+    "magma -b papiliopro -d build and": {
+        "__pycache__/and.cpython-36.pyc": "input-845663aa94e14f1851e663691b733ffc",
+        "and.py": "input-358bd76584a333cb21de36704a1f040a",
+        "build/and.ucf": "output-1954fbe23de2a33aca22bc2b301e933c",
+        "build/and.v": "output-056fc5c17c75b68de6509dfede746e52",
+        "build/not.ucf": "input-ac7e79c539cf1978446cab92b27f8aec",
+        "build/not.v": "input-a87f24a53b0d9265afb05d3905fa9061"
+    },
+    "magma -b papiliopro -d build blink": {
+        "__pycache__/blink.cpython-36.pyc": "input-ca11a770aa058490d3775cdf443e71cc",
+        "blink.py": "input-db51fad44581e4a84c62f00b42335bef",
+        "build/blink.ucf": "output-d4a778d510d855e5c53c8ff227ec8f2b",
+        "build/blink.v": "output-e16cf830900981e2110e695bed9e9163",
+        "build/count.ucf": "input-de10485e54ddb321eff5c952712e63fc",
+        "build/count.v": "input-387e2e6ca2459a19dc43213d567228e3"
+    },
+    "magma -b papiliopro -d build count": {
+        "__pycache__/count.cpython-36.pyc": "input-ab70ce128ce1ee133364dbdc40862921",
+        "build/count.ucf": "output-de10485e54ddb321eff5c952712e63fc",
+        "build/count.v": "output-387e2e6ca2459a19dc43213d567228e3",
+        "build/pause.ucf": "input-e0c8ddc8c208adaf6c9497cad98edc94",
+        "build/pause.v": "input-01f1fcb768e97593601fa69d6987325d",
+        "count.py": "input-d0329758a1c61d84c952d32a8d952e22"
+    },
+    "magma -b papiliopro -d build mov": {
+        "__pycache__/mov.cpython-36.pyc": "input-02fd96cec820bea62da5bbe74ce631ee",
+        "build/mov.ucf": "output-ac7e79c539cf1978446cab92b27f8aec",
+        "build/mov.v": "output-a87f24a53b0d9265afb05d3905fa9061",
+        "mov.py": "input-061bf78e1992ba9a3f0903bebac1370d",
+        "parallel.py": "input-16c03bcd4f80ab83eebe6a8d4eb4858f"
+    },
+    "magma -b papiliopro -d build not": {
+        "__pycache__/not.cpython-36.pyc": "input-c09f9be4d4f58a47fa3526bc3dacbfdd",
+        "build/mov.ucf": "input-ac7e79c539cf1978446cab92b27f8aec",
+        "build/mov.v": "input-a87f24a53b0d9265afb05d3905fa9061",
+        "build/not.ucf": "output-ac7e79c539cf1978446cab92b27f8aec",
+        "build/not.v": "output-a87f24a53b0d9265afb05d3905fa9061",
+        "not.py": "input-ee4776be9235f470cebe7f9af3dadd03"
+    },
+    "magma -b papiliopro -d build oneshot": {
+        "__pycache__/oneshot.cpython-36.pyc": "input-3063e3487ea558ab99583e67b29b0b81",
+        "build/blink.ucf": "input-d4a778d510d855e5c53c8ff227ec8f2b",
+        "build/blink.v": "input-e16cf830900981e2110e695bed9e9163",
+        "build/oneshot.ucf": "output-3d70914b63f1040def5a178d2ba7c43c",
+        "build/oneshot.v": "output-0e5ca48d759bcf77e06f79d89ffd1104",
+        "oneshot.py": "input-129a2b0ef9ab5c09964837f8290faf3a"
+    },
+    "magma -b papiliopro -d build or": {
+        "__pycache__/or.cpython-36.pyc": "input-c40bd9f0598a23c94951b838283d51fe",
+        "build/and.ucf": "input-1954fbe23de2a33aca22bc2b301e933c",
+        "build/and.v": "input-056fc5c17c75b68de6509dfede746e52",
+        "build/or.ucf": "output-1954fbe23de2a33aca22bc2b301e933c",
+        "build/or.v": "output-056fc5c17c75b68de6509dfede746e52",
+        "or.py": "input-c800564d6dc3a67fd86fe5ccb4c09c97"
+    },
+    "magma -b papiliopro -d build parallel": {
+        "__pycache__/parallel.cpython-36.pyc": "output-0229bd206aac5cf42645e3106a2ed61f",
+        "build/parallel.ucf": "output-e45ea6cd9419c60b8d9de0b152b0d1ca",
+        "build/parallel.v": "output-26b154160c72ed0907dc242e36b8c449",
+        "build/sob.ucf": "input-de10485e54ddb321eff5c952712e63fc",
+        "build/sob.v": "input-930812ecd8fdc11ed60f40f3b2467877",
+        "parallel.py": "input-16c03bcd4f80ab83eebe6a8d4eb4858f"
+    },
+    "magma -b papiliopro -d build pause": {
+        "__pycache__/pause.cpython-36.pyc": "input-0ec794c626527affbe6d751727e25bf4",
+        "build/pause.ucf": "output-e0c8ddc8c208adaf6c9497cad98edc94",
+        "build/pause.v": "output-01f1fcb768e97593601fa69d6987325d",
+        "build/xor.ucf": "input-1954fbe23de2a33aca22bc2b301e933c",
+        "build/xor.v": "input-056fc5c17c75b68de6509dfede746e52",
+        "pause.py": "input-2e424ecb37f2b0d696228a53cac21122"
+    },
+    "magma -b papiliopro -d build ripple": {
+        "__pycache__/ripple.cpython-36.pyc": "input-09af266923079f5b0e82da7c72abc9c2",
+        "build/ripple.ucf": "output-de10485e54ddb321eff5c952712e63fc",
+        "build/ripple.v": "output-af3a694aaa78a28953c4c6ca0a82f6d7",
+        "build/step.ucf": "input-e0c8ddc8c208adaf6c9497cad98edc94",
+        "build/step.v": "input-d9071605bb44d580112381690a22f89e",
+        "ripple.py": "input-c91e63fa2d82d8f63f0ca26f4f839131"
+    },
+    "magma -b papiliopro -d build sob": {
+        "__pycache__/sob.cpython-36.pyc": "input-45c830ebe2de59dce6bfd7bd4987fc68",
+        "build/ripple.ucf": "input-de10485e54ddb321eff5c952712e63fc",
+        "build/ripple.v": "input-af3a694aaa78a28953c4c6ca0a82f6d7",
+        "build/sob.ucf": "output-de10485e54ddb321eff5c952712e63fc",
+        "build/sob.v": "output-930812ecd8fdc11ed60f40f3b2467877",
+        "sob.py": "input-75142477fb57c1ed1e5cbc40454b6b34"
+    },
+    "magma -b papiliopro -d build step": {
+        "__pycache__/step.cpython-36.pyc": "input-bde5914ab03de118a21a97dc54505802",
+        "build/and.ucf": "input-1954fbe23de2a33aca22bc2b301e933c",
+        "build/and.v": "input-056fc5c17c75b68de6509dfede746e52",
+        "build/blink.ucf": "input-d4a778d510d855e5c53c8ff227ec8f2b",
+        "build/blink.v": "input-e16cf830900981e2110e695bed9e9163",
+        "build/count.ucf": "input-de10485e54ddb321eff5c952712e63fc",
+        "build/count.v": "input-387e2e6ca2459a19dc43213d567228e3",
+        "build/mov.ucf": "input-ac7e79c539cf1978446cab92b27f8aec",
+        "build/mov.v": "input-a87f24a53b0d9265afb05d3905fa9061",
+        "build/not.ucf": "input-ac7e79c539cf1978446cab92b27f8aec",
+        "build/not.v": "input-a87f24a53b0d9265afb05d3905fa9061",
+        "build/oneshot.ucf": "input-3d70914b63f1040def5a178d2ba7c43c",
+        "build/oneshot.v": "input-0e5ca48d759bcf77e06f79d89ffd1104",
+        "build/or.ucf": "input-1954fbe23de2a33aca22bc2b301e933c",
+        "build/or.v": "input-056fc5c17c75b68de6509dfede746e52",
+        "build/parallel.ucf": "input-e45ea6cd9419c60b8d9de0b152b0d1ca",
+        "build/parallel.v": "input-26b154160c72ed0907dc242e36b8c449",
+        "build/pause.ucf": "input-e0c8ddc8c208adaf6c9497cad98edc94",
+        "build/pause.v": "input-01f1fcb768e97593601fa69d6987325d",
+        "build/step.ucf": "output-e0c8ddc8c208adaf6c9497cad98edc94",
+        "build/step.v": "output-d9071605bb44d580112381690a22f89e",
+        "build/xor.ucf": "input-1954fbe23de2a33aca22bc2b301e933c",
+        "build/xor.v": "input-056fc5c17c75b68de6509dfede746e52",
+        "parallel.py": "input-16c03bcd4f80ab83eebe6a8d4eb4858f",
+        "step.py": "input-30c3b22a136afb442a4b74d0d4d93138"
+    },
+    "magma -b papiliopro -d build xor": {
+        "__pycache__/xor.cpython-36.pyc": "input-5b9c71259f9953fd37d8862fc788b194",
+        "build/or.ucf": "input-1954fbe23de2a33aca22bc2b301e933c",
+        "build/or.v": "input-056fc5c17c75b68de6509dfede746e52",
+        "build/xor.ucf": "output-1954fbe23de2a33aca22bc2b301e933c",
+        "build/xor.v": "output-056fc5c17c75b68de6509dfede746e52",
+        "xor.py": "input-36fa18d4e9b338b5a096d128892291c3"
+    }
+}

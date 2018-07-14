@@ -1,0 +1,55 @@
+from magma.shield.LogicStart import *
+from mantle.bits import itob
+from laughton import *
+
+def prog():
+    ZERO = I0
+
+    # mode [0, 0]
+    #  SCLK idle state is 0
+    #  data is clocked in on the SDI pin on the rising edge of SCK 
+    #  and clocked out on the SDO pin on the falling edge of SCK.
+    inst([0, 0]) # [SCLK, SS]
+    inst([1, 0])
+    inst([0, 0], ZERO, label()-1 )
+    inst([0, 1], jump=label()) # halt
+
+# 4Mhz clock
+#Papilio.Clock(4)
+
+SS =   Out(Papilio.A[0])
+MOSI = Out(Papilio.A[1])
+#MISO = In(Papilio.A[2])
+SCLK = Out(Papilio.A[3])
+
+reset = Counter(10)
+    
+count = Counter(4, init=15)
+
+sclk = Bit()
+ss = Bit()
+
+O = array(sclk, ss)
+
+bit1 = Laughton(main, 1, 2, output='parallel', r=True)
+wire( bit1(count.COUT, r=reset), O )
+
+wire( sclk, counter.CE )
+
+ce = Or2(reset, sclk)
+R = 128 + 32 + 8 + 2
+seq = int2seq( R, 16 )
+
+# note that ce = sclk, this results in the shift register
+# being clocked on the next rising edge of CLK, which is
+# the falling edge of sclk
+mosi = PISO(16) ( 0, seq, reset, CE=ce )
+
+#miso = SIPO(16, site=(3,3)) ( MISO, ce=ce )
+
+#wire( miso[4:12], LED )
+
+wire( ss,   SS )
+wire( mosi, MOSI )
+wire( sclk, SCLK )
+
