@@ -20,13 +20,6 @@ install:
     - pip install pytest-cov pytest-pep8
     - pip install -e .
 
-    - git clone https://github.com/StanfordVLSI/Genesis2.git
-    - rm -rf Genesis2/Genesis2Tools/PerlLibs/ExtrasForOldPerlDistributions/Compress
-    # Set env variables for genesis (installed earlier)
-    - export GENESIS_HOME=`pwd`/Genesis2/Genesis2Tools
-    - export PATH=$GENESIS_HOME/bin:$GENESIS_HOME/gui/bin:$PATH
-    - export PERL5LIB=$GENESIS_HOME/PerlLibs/ExtrasForOldPerlDistributions:$PERL5LIB
-
     # For some reason, we get
     # >   import filecmp
     # E   ModuleNotFoundError: No module named 'filecmp'
@@ -35,7 +28,7 @@ install:
     - export PYTHONPATH=.:$PYTHONPATH
 
 script:
-    - pytest --cov cb --pep8 cb -v --cov-report term-missing --cov-append test_cb
+    - pytest -v -test_cb
 
 after_success:
     - coveralls
