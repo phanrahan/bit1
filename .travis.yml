@@ -28,7 +28,7 @@ install:
     - export PYTHONPATH=.:$PYTHONPATH
 
 script:
-    - pytest -v -test_cb
+    - pytest -v 
 
 after_success:
     - coveralls
