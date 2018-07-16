@@ -20,15 +20,10 @@ install:
     - pip install pytest-cov pytest-pep8
     - pip install -e .
 
-    # For some reason, we get
-    # >   import filecmp
-    # E   ModuleNotFoundError: No module named 'filecmp'
-    # see https://travis-ci.com/rsetaluri/magma_connect_box/builds/78883000
-    - wget https://raw.githubusercontent.com/python/cpython/master/Lib/filecmp.py
     - export PYTHONPATH=.:$PYTHONPATH
 
 script:
-    - pytest -v 
+    - pytest --cov bit1 -v  --cov-report term-missing tests
 
 after_success:
     - coveralls
