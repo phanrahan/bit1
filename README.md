@@ -6,7 +6,6 @@
 References
 
 [Laughton 1-bit computer](http://laughtonelectronics.com/Arcana/One-bit%20computer/One-bit%20computer.html)
-[
 
 
 
