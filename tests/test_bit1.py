@@ -6,7 +6,8 @@ NI = 2
 NO = 2
 
 def main():
-    and_( I0, I1, O0 )
+    from bit1.isa import mov, jump, I0, O0
+    mov( I0, O0 )
     jump( 0 )
 
 @pytest.mark.parametrize('NI', [1,2])

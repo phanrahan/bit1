@@ -11,6 +11,7 @@ NI = 1
 NO = 2
 
 def prog():
+    from bit1.isa import clr, set, pause, jump
     clr( 0 )
     pause( 0 )
     set( 0 )

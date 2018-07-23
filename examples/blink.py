@@ -18,7 +18,9 @@ if NO == 1:
 
 slow = mantle.Counter(24) 
 
+# clr, set at slow clock
 def prog():
+    from bit1.isa import clr, set, O0
     clr( O0 )
     set( O0, jump=0 )
 

@@ -11,6 +11,7 @@ NI = 1
 NO = 8
 
 def prog():
+    from bit1.isa import set, clr, halt
     for i in range(NO):
         j = (i-1+NO) % NO
         set( i )

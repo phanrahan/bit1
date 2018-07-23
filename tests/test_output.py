@@ -10,6 +10,7 @@ NI = 2
 LOGNI = clog2(NI)
 
 def main():
+    from bit1.isa import and_, jump, I0, I1, O0
     and_( I0, I1, O0 )
     jump( 0 )
 
@@ -41,6 +42,7 @@ def test_decoded_clock(has_ce, has_reset):
     assert not has_reset or hasattr(output, 'RESET')
     #print(output)
 
+@pytest.mark.skip(reason='NYI')
 @pytest.mark.parametrize("NO", [1,2,3,4,5,6,7,8,16])
 def test_output(NO):
     LOGNO = NO

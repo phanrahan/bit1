@@ -3,7 +3,7 @@ from magma import *
 from magma.bitutils import clog2
 from mantle import LUT6, I4, I5, FF, Mux2, Mux4, Mux8, Mux16
 
-from .asm import assemble, compile
+from .asm import assemble, disassemble
 from .ROMN import ROM
 
 MAXLOGN  = 5
@@ -205,7 +205,7 @@ def configure(n, ni, no, output):
 
 
 def DefineBit1(main, N, NI, NO, mode='decoded', 
-                has_ce=False, has_reset=False, init=0):
+                has_ce=False, has_reset=False, init=0, debug=False):
 
     assert NI > 0
     assert NO > 0
@@ -216,7 +216,9 @@ def DefineBit1(main, N, NI, NO, mode='decoded',
     print( 'inputs: %d (%d bits)' % (NI, LOGNI) )
     print( 'outputs: %d (%d bits)' % (NO, LOGNO) )
 
-    _, controlflow, datain, dataout = assemble(main, LOGN, LOGNI, LOGNO)
+    mem, controlflow, datain, dataout = assemble(main, LOGN, LOGNI, LOGNO)
+    if( debug ):
+        disassemble(mem)
 
     assert len(controlflow[0]) == LOGN
 
@@ -256,8 +258,9 @@ def DefineBit1(main, N, NI, NO, mode='decoded',
 
 def Bit1(main, n, ni, no, 
             mode='decoded', 
-            has_ce=False, has_reset=False, init=0):
+            has_ce=False, has_reset=False, init=0,
+            debug=False):
     return  DefineBit1(main, n, ni, no, 
                 mode=mode,
-                has_ce=has_ce, has_reset=has_reset, init=0)()
+                has_ce=has_ce, has_reset=has_reset, init=0, debug=debug)()
 

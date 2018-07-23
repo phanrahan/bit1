@@ -10,6 +10,7 @@ NO = 2
 LOGNO = clog2(NO) + 1
 
 def main():
+    from bit1.isa import and_, jump, I0, I1, O0
     and_( I0, I1, O0 )
     jump( 0 )
 

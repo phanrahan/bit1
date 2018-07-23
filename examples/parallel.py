@@ -9,10 +9,11 @@ NI = 1
 NO = 2
 
 def prog():
-    out( 0, 0 )
-    out( 1, 0 )
-    out( 0, 1 )
-    out( 1, 1, jump=0 )
+    from bit1.isa import out
+    out( [0, 0] )
+    out( [1, 0] )
+    out( [0, 1] )
+    out( [1, 1], jump=0 )
 
 
 megawing = MegaWing(PapilioPro)

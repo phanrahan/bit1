@@ -19,11 +19,12 @@ if NO == 1:
     main.LED = m.bits([main.LED])
 
 def prog():
+    from bit1.isa import mov, jump
     for i in range(NI):
         mov( i, i )
     jump( 0 )
 
-bit1 = Bit1(prog, N, NI, NO )
+bit1 = Bit1(prog, N, NI, NO, debug=True )
 
 m.wire( bit1(main.SWITCH), main.LED )
 

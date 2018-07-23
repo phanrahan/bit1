@@ -10,6 +10,7 @@ NI = NR
 NO = NR + 4
 
 def prog():
+    from bit1.isa import not_, if1, jump
     for i in range(NR):
         not_(i, i)
         if1(i, 0)

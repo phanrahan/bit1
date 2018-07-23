@@ -19,7 +19,9 @@ if NO == 1:
     main.LED = m.bits([main.LED])
 
 def prog():
-    not_( I0, O0 )
+    from bit1.isa import not_, jump
+    for i in range(NI):
+        not_( i, i )
     jump( 0 )
 
 bit1 = Bit1(prog, N, NI, NO )

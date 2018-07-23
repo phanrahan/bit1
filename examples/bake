@@ -7,17 +7,14 @@ BOARD = 'papiliopro'
 BUILD = 'build'
 GOLD = 'gold' 
 
-#tests = glob.glob('*.py')
 tests  = ['mov.py']
 tests += ['not.py']
 tests += ['and.py', 'or.py', 'xor.py']
-tests += ['pause.py']
-tests += ['count.py']
 tests += ['blink.py']
+tests += ['blinkstep.py'] 
+tests += ['pause.py']
 tests += ['oneshot.py']
-tests += ['step.py'] 
 tests += ['ripple.py']
-tests += ['sob.py']
 tests += ['parallel.py']
 
 def build():

@@ -8,6 +8,7 @@ NI = 2
 NO = 1
 
 def prog():
+    from bit1.isa import xor, jump, I0, I1, O0
     xor( I0, I1, O0 )
     jump( 0 )
 

@@ -1,6 +1,8 @@
-import inspect
-from magma import *
+import logging
 from magma.bitutils import int2seq
+
+__all__ = ['assemble', 'disassemble', 'org', 'equ', 'label']
+
 
 LOGN = 5
 N = 1 << LOGN
@@ -13,18 +15,27 @@ NO = 4
 
 RNULL = 0
 
-
 _mem = 0
 _pc = 0
 
 labels = {}
 _pass = 0
 
-mode = 0
+decoded = 0
+
+def getpc(n=0):
+    global _pc
+    return (_pc+n)%N
+
+def setpc(pc):
+    global _pc
+    if not (0 <= pc < N):
+        logging.warning(f"pc: {pc} not in range({N})")
+        pc %= N
+    _pc = pc
 
 def org(newpc):
-    global _pc
-    _pc = newpc
+    setpc(newpc)
 
 def equ(name, value):
     global labels
@@ -40,9 +51,15 @@ def label(name=None):
         return 0
     return _pc
 
+
 def inst( o, i=None, next_pc0=None, next_pc1=None, **kwargs):
 
-    if mode:
+    global _pc, _mem
+
+    #if _pass == 1:
+    #    print(_pc, 'inst',o,i,next_pc0,next_pc1)
+    #    print('mem[0]=',_mem[0])
+    if decoded:
         if o == None:
             oaddr = RNULL
             odata = 0
@@ -63,24 +80,25 @@ def inst( o, i=None, next_pc0=None, next_pc1=None, **kwargs):
         next_pc0 = None
         next_pc1 = None
 
-    assert i >= 0 and i < (1 << LOGNI)
+    assert 0 <= i < NI
     i = int2seq(i, LOGNI) if LOGNI > 0 else [0]
 
-    global _pc, _mem
 
     if next_pc0 is None:
         if   jump is not None: next_pc0 = jump
-        elif skip is not None: next_pc0 = _pc + skip + 1
-        else: next_pc0 = _pc+1
+        elif skip is not None: next_pc0 = (_pc + skip + 1)%N
+        else: next_pc0 = (_pc+1)%N
 
     if next_pc1 is None:
         if   jump is not None: next_pc1 = jump
-        elif skip is not None: next_pc1 = _pc + skip + 1
-        else: next_pc1 = _pc+1
+        elif skip is not None: next_pc1 = (_pc + skip + 1)%N
+        else: next_pc1 = (_pc+1)%N
 
-    assert next_pc0 >= 0 and next_pc0 < N
-    assert next_pc1 >= 0 and next_pc1 < N
+    assert 0 <= next_pc0 < N
+    assert 0 <= next_pc1 < N
 
+    #if _pass == 1:
+    #    print('fullinst',o,i,next_pc0,next_pc1)
     next_pc0 = int2seq(next_pc0, LOGN)
     next_pc1 = int2seq(next_pc1, LOGN)
 
@@ -88,105 +106,12 @@ def inst( o, i=None, next_pc0=None, next_pc1=None, **kwargs):
     assert _pc < N
 
     _mem[_pc] = [ o, i, next_pc0, next_pc1 ]
-    _pc = _pc + 1
+    setpc((_pc+1)%N)
+
+    #if _pass == 1:
+    #    print('mem[0]=',_mem[0])
 
 
-
-def jump( pc ):
-    inst( None, 0, jump=pc )
-
-def halt():
-    jump( _pc )
-
-
-def if0( port, pc ):
-    inst( None, port, next_pc0=pc )
-
-def if1( port, pc ):
-    inst( None, port, next_pc1=pc )
-
-def ifelse( port, next_pc1, next_pc0 ):
-    inst( None, port, next_pc0=next_pc0, next_pc1=next_pc1 )
-
-
-def skipif1( port, n=1 ):
-    inst( None, port, next_pc1=_pc+n+1, next_pc0=_pc+1)
-
-def skipif0( port, n=1 ):
-    inst( None, port, next_pc0=_pc+n+1, next_pc1=_pc+1 )
-
-def skip( n=1 ):
-    inst( None, port, skip=n )
-
-def pause( port ):
-    inst( None, port, next_pc0=_pc, next_pc1=_pc+1 )
-
-def sob(tick,test):
-    set(tick)
-    inst( [tick,0], test,0 )
-
-def out( *args, **kwargs):
-    inst( list(args), **kwargs )
-
-def set( port, **kwargs ):
-    if mode:
-        out( port, 1, **kwargs )
-    else:
-        o = NO * [1]
-        out( *o, **kwargs )
-
-def clr( port, **kwargs ):
-    if mode:
-        out( port, 0, **kwargs )
-    else:
-        o = NO * [0]
-        out( *o, **kwargs )
-
-
-def nop():
-    inst( None )
-
-def delay(n):
-    for i in range(n):
-        nop()
-
-
-def mov( ra, rb ):
-    skipif1( ra )
-    out( rb, 0, skip=1 )
-    out( rb, 1 )
-
-def not_( ra, rb ):
-    skipif0( ra )
-    out( rb, 0, skip=1 )
-    out( rb, 1 )
-
-def and_( ra, rb, rc ):
-    skipif0( ra, 2 )
-    skipif0( rb, 1 )
-    out( rc, 1, skip=1 )
-    out( rc, 0 )
-
-def or_( ra, rb, rc ):
-    skipif1( ra, 2 )
-    skipif1( rb, 1 )
-    out( rc, 0, skip=1 )
-    out( rc, 1 )
-
-def xor( ra, rb, rc ):
-    skipif1( ra, 1 )
-    ifelse( rb, _pc+2, _pc+3 ) # ra=0
-    ifelse( rb, _pc+2, _pc+1 ) # ra=1
-    out( rc, 1, skip=1 ) # ra != rb
-    out( rc, 0 )         # ra == rb
-
-
-def val(bits):
-    val = 0
-    n = len(bits)
-    for i in range(n):
-        if bits[i]: val |= (1 << i)
-    return val
 
 def init(logn, logni, logno, o='decoded'):
 
@@ -208,84 +133,30 @@ def init(logn, logni, logno, o='decoded'):
     global labels
     labels = {}
 
-    global mode
-    mode = o == 'decoded'
+    global decoded
+    decoded = (o == 'decoded')
 
     global _mem
     _mem = N * [0]
     for i in range(N):
-        if mode:
+        if decoded:
             inst( None, jump=0 )
         else:
             inst( NO * [0], jump=0 )
 
-    g = {}
+def assemble(prog, logn, logni, logno, mode='decoded'):
 
-    for i in range(NI):
-        g['I' + str(i)] = i
-
-    for i in range(NO):
-        g['O' + str(i)] = i
-
-    g['NI'] = NI
-    g['NO'] = NO
-
-    g['label'] = label
-    g['org'] = org
-
-    g['inst'] = inst
-
-    g['out'] = out
-    g['set'] = set
-    g['clr'] = clr
-
-    g['skipif0'] = skipif0
-    g['skipif1'] = skipif1
-    g['skip'] = skip
-
-    g['if0'] = if0
-    g['if1'] = if1
-    g['ifelse'] = ifelse
-
-    g['pause'] = pause
-
-    g['jump'] = jump
-    g['halt'] = halt
-
-    g['sob'] = sob
-
-
-    g['nop'] = nop
-    g['delay'] = delay
-
-    g['mov'] = mov
-    g['not_'] = not_
-
-    g['and_'] = and_
-    g['or_'] = or_
-    g['xor'] = xor
-
-    return g
-
-def assemble(main, logn, logni, logno, mode='decoded'):
-
-    g = init(logn, logni, logno, mode)
+    init(logn, logni, logno, mode)
 
     global _mem, _pc, _pass
 
     _pc = 0
     _pass = 0
-    exec( inspect.getsource( main ), g )
+    prog()
 
     _pc = 0
     _pass = 1
-    exec( inspect.getsource( main ), g )
-
-    #dout, din, pc0, pc1 = _mem[0]
-    #print( 'len(dout) =', len(dout) )
-    #print( 'len(din) =', len(din) )
-    #print( 'len(pc0) =', len(pc0) )
-    #print( 'len(pc0) =', len(pc1) )
+    prog()
 
     din, dout, pc0, pc1 = N*[0], N*[0], N*[0], N*[0]
     for i in range(N):
@@ -294,22 +165,31 @@ def assemble(main, logn, logni, logno, mode='decoded'):
 
     return _mem, seq, din, dout
 
+def val(bits):
+    val = 0
+    n = len(bits)
+    for i in range(n):
+        if bits[i]: val |= (1 << i)
+    return val
+
 def disassemble(mem):
-    fmt = "%02X"
+    fmt = "%X"
     for pc in range(N):
         m = mem[pc]
-        print(fmt % pc, end=': ')
+        print("%02X" % pc, end=': ')
 
         o = m[0]
         i = val(m[1])
         pc0 = val(m[2])
         pc1 = val(m[3])
+        #print(o,i,m[2],pc0,m[3],pc1)
 
-        if mode:
+        if decoded:
             n = len(o)
             p = val(o[:n-1])
             if p < 1<<LOGNO:
-                print( f'out(%d,%d)' % (p,o[n-1]), end=' ')
+                if p != RNULL:
+                    print( f'out(port=%d,value=%d)' % (p,o[n-1]), end=' ')
             else:
                 if pc0 == pc1 and pc0 == pc+1:
                     print ('nop()', end=' ')
